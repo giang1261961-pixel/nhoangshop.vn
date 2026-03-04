@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHOANG V8 | PREMIUM EDITION</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary: #00f2ff;
+            /* Cyan Neon */
+            --secondary: #7000ff;
+            /* Vivid Purple */
+            --accent: #00ff95;
+            /* Emerald */
+            --danger: #ff0055;
+            /* Rose Red */
+            --bg: #050508;
+            --glass: rgba(10, 10, 15, 0.95);
+            --border: rgba(0, 242, 255, 0.15);
+            --terminal-bg: #0d1117;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: #e6edf3;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 50% 50%, #101025 0%, #050508 100%);
+            overflow: hidden;
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            width: 95%;
+            max-width: 500px;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.05), inset 0 0 20px rgba(0, 242, 255, 0.02);
+            max-height: 95vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+            position: relative;
+            border-top: 2px solid var(--primary);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            text-align: center;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        .cyber-input {
+            background: var(--terminal-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            padding: 18px;
+            width: 100%;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            outline: none;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .cyber-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            color: #fff;
+            padding: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            width: 100%;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.2);
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-off {
+            background: #1a1a1a;
+            color: #555;
+            border: 1px solid #333;
+            box-shadow: none;
+        }
+
+        .btn-on {
+            background: linear-gradient(90deg, var(--accent), #00ba6f);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .mod-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .mod-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .mod-item span {
+            display: block;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .ai-box {
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            margin: 15px 0;
+        }
+
+        #ai-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            font-size: 0.8rem;
+            color: #aaa;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .key-manager {
+            height: 220px;
+            overflow-y: auto;
+            background: #000;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px solid #111;
+        }
+
+        .key-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #111;
+        }
+
+        .role-tab {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.7rem;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #333;
+            background: #111;
+            color: #888;
+            text-align: center;
+        }
+
+        .tab.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0, 242, 255, 0.05);
+        }
+
+        #main-ui,
+        #admin-panel,
+        #login-screen {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="login-screen" style="display: block; text-align: center;">
+            <div style="margin-bottom: 20px; opacity: 0.5; font-size: 0.7rem;" id="hwid-display"></div>
+            <h1 style="margin-bottom: 10px;">AUTHENTICATION</h1>
+            <p style="font-size: 0.8rem; color: #666;">Enter your security key to access the terminal</p>
+            <input type="password" id="key-input" class="cyber-input" placeholder="••••••••">
+            <button class="btn" onclick="handleLogin()">INITIALIZE SYSTEM</button>
+        </div>
+
+        <div id="main-ui">
+            <div class="header">
+                <h1>NHOANG V8 PRO</h1>
+            </div>
+            <div id="user-info"
+                style="font-size: 0.7rem; text-align: center; color: #888; margin: 15px 0; letter-spacing: 1px;"></div>
+
+            <div class="mod-grid">
+                <div class="mod-item"><span>AIM_LOCK SYSTEM</span><button class="btn btn-off"
+                        onclick="toggleMod(this, 'Aim Lock')">OFF</button></div>
+                <div class="mod-item"><span>ANTI_SHAKE FIX</span><button class="btn btn-off"
+                        onclick="toggleMod(this, 'Fix Rung')">OFF</button></div>
+                <div class="mod-item"><span>RECOIL CONTROL</span><button class="btn btn-off"
+                        onclick="toggleMod(this, 'Ghìm Tâm')">OFF</button></div>
+                <div class="mod-item"><span>SHIELD BYPASS</span><button class="btn btn-off"
+                        onclick="toggleMod(this, 'Anti-Ban')">OFF</button></div>
+            </div>
+
+            <div class="ai-box">
+                <div id="ai-messages">
+                    <div style="color: var(--primary);">$ CORE_V8_ENGINE: STANDBY...</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 10px;">
+                <button id="admin-btn" class="btn" onclick="showAdmin()"
+                    style="display: none; background: rgba(112, 0, 255, 0.1); border: 1px solid var(--secondary); color: var(--secondary);">DB_PORTAL</button>
+                <button class="btn" onclick="location.reload()"
+                    style="background: none; border: 1px solid var(--danger); color: var(--danger); box-shadow: none;">TERMINATE</button>
+            </div>
+        </div>
+
+        <div id="admin-panel">
+            <div class="header">
+                <h1>DATABASE</h1>
+            </div>
+            <div
+                style="padding: 20px; border: 1px solid var(--border); border-radius: 16px; margin-top: 15px; background: rgba(0,0,0,0.2);">
+                <div class="role-tab">
+                    <div id="tab-user" class="tab active" onclick="setRole('USER')">REGULAR KEY</div>
+                    <div id="tab-admin" class="tab" onclick="setRole('ADMIN')">ADMIN KEY</div>
+                </div>
+                <input type="text" id="prefix"
+                    style="width: 100%; background:#000; border:1px solid #222; color:#fff; padding:12px; border-radius:8px; margin-bottom: 12px; font-size: 0.8rem;"
+                    value="NH_">
+                <button class="btn" onclick="createNewKey()" style="background: var(--primary); color: #000;">GENERATE
+                    ACCESS KEY</button>
+            </div>
+            <div class="key-manager" id="key-list-db"></div>
+            <button class="btn"
+                style="margin-top: 20px; background: #111; color: #fff; border: 1px solid #333; box-shadow: none;"
+                onclick="hideAdmin()">RETURN</button>
+        </div>
+    </div>
+
+    <script>
+        const MASTER_KEY = "nhoang123";
+        const myHWID = (() => {
+            let id = localStorage.getItem('nh_hwid');
+            if (!id) {
+                id = 'X-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                localStorage.setItem('nh_hwid', id);
+            }
+            return id;
+        })();
+        document.getElementById('hwid-display').innerText = "DEVICE_TOKEN: " + myHWID;
+
+        let DB = JSON.parse(localStorage.getItem('nhoang_db_v8')) || [];
+
+        function syncDB() {
+            let adminExists = DB.find(u => u.key === MASTER_KEY);
+            if (!adminExists) {
+                DB.unshift({ key: MASTER_KEY, type: "ADMIN", hwid: null });
+            } else {
+                adminExists.hwid = null; // Luôn mở khóa cho Master Key
+            }
+            localStorage.setItem('nhoang_db_v8', JSON.stringify(DB));
+        }
+        syncDB();
+
+        let selectedRole = 'USER';
+
+        function handleLogin() {
+            const val = document.getElementById('key-input').value.trim();
+            const userIdx = DB.findIndex(u => u.key === val);
+
+            if (userIdx !== -1) {
+                let user = DB[userIdx];
+                if (user.key !== MASTER_KEY) {
+                    if (!user.hwid) {
+                        user.hwid = myHWID;
+                        DB[userIdx] = user;
+                        localStorage.setItem('nhoang_db_v8', JSON.stringify(DB));
+                    } else if (user.hwid !== myHWID) {
+                        alert("ACCESS DENIED: Key bound to another device!");
+                        return;
+                    }
+                }
+
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-ui').style.display = 'block';
+                document.getElementById('user-info').innerText = `SESSION: ${user.type} | STATUS: ENCRYPTED`;
+                if (user.type === 'ADMIN') document.getElementById('admin-btn').style.display = 'block';
+                addLog("Security handshake complete. Welcome.", "var(--primary)");
+            } else {
+                alert("INVALID KEY");
+            }
+        }
+
+        function setRole(r) {
+            selectedRole = r;
+            document.getElementById('tab-user').className = r === 'USER' ? 'tab active' : 'tab';
+            document.getElementById('tab-admin').className = r === 'ADMIN' ? 'tab active' : 'tab';
+        }
+
+        function createNewKey() {
+            const p = document.getElementById('prefix').value || "K_";
+            const nk = p + Math.random().toString(36).substring(2, 6).toUpperCase();
+            DB.push({ key: nk, type: selectedRole, hwid: null });
+            localStorage.setItem('nhoang_db_v8', JSON.stringify(DB));
+            updateAdminUI();
+        }
+
+        function resetKey(i) {
+            if (DB[i].key === MASTER_KEY) return;
+            DB[i].hwid = null;
+            localStorage.setItem('nhoang_db_v8', JSON.stringify(DB));
+            updateAdminUI();
+        }
+
+        function delKey(i) {
+            if (DB[i].key === MASTER_KEY) return;
+            DB.splice(i, 1);
+            localStorage.setItem('nhoang_db_v8', JSON.stringify(DB));
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            const list = document.getElementById('key-list-db');
+            list.innerHTML = DB.map((u, i) => `
+                <div class="key-row">
+                    <div style="flex:1">
+                        <div style="color:var(--primary); font-size:0.8rem; font-family:'Fira Code'">${u.key}</div>
+                        <div style="font-size:0.55rem; color:#555">${u.key === MASTER_KEY ? 'MASTER_ACCESS' : (u.hwid ? 'LOCKED: ' + u.hwid : 'READY')}</div>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        ${u.key !== MASTER_KEY ? `<button onclick="resetKey(${i})" style="background:none; border:1px solid #333; color:#888; cursor:pointer; padding:4px 6px; border-radius:4px;">RST</button>` : ''}
+                        <button onclick="navigator.clipboard.writeText('${u.key}');" style="background:none; border:1px solid var(--primary); color:var(--primary); cursor:pointer; padding:4px 6px; border-radius:4px;">CPY</button>
+                        ${u.key !== MASTER_KEY ? `<button onclick="delKey(${i})" style="color:var(--danger); background:none; border:none; cursor:pointer; font-weight:bold;">×</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleMod(btn, n) {
+            if (btn.innerText === "OFF") {
+                btn.innerText = "ON"; btn.className = "btn btn-on";
+                addLog(`MODULE_${n.toUpperCase()}: ACTIVE`, "var(--accent)");
+            } else {
+                btn.innerText = "OFF"; btn.className = "btn btn-off";
+                addLog(`MODULE_${n.toUpperCase()}: STANDBY`, "#555");
+            }
+        }
+
+        function addLog(m, c) {
+            const box = document.getElementById('ai-messages');
+            const d = document.createElement('div');
+            d.style.color = c; d.innerHTML = `> ${m}`;
+            box.appendChild(d); box.scrollTop = box.scrollHeight;
+        }
+
+        function showAdmin() { document.getElementById('main-ui').style.display = 'none'; document.getElementById('admin-panel').style.display = 'block'; updateAdminUI(); }
+        function hideAdmin() { document.getElementById('admin-panel').style.display = 'none'; document.getElementById('main-ui').style.display = 'block'; }
+    </script>
+</body>
+
+</html>
